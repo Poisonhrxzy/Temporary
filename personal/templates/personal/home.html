@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+    @media (max-width: 768px) { 
+      .right-column{
+        margin-left: 0px;
+      }
+    }
+
+    @media (min-width: 768px) { 
+      .right-column{
+        margin-left: 20px;
+      }
+    }
+
+    .blog-post-container{
+      background-color: #fff;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .create-post-bar{
+      background-color: #fff;
+      margin-bottom:20px;
+    }
+
+    .left-column{
+      padding:0px;
+    }
+
+    .right-column{
+      padding:0px;
+    }
+
+    .lead{
+      font-size: 17px;
+    }
+
+</style>
+
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+      {% if request.user.is_authenticated %}
+        <h1 class="display-4 fw-normal">Hello {{request.user.username}}</h1>
+        <p class="fs-5 text-muted">What topics are you interested for today, {{request.user.username}}</p>
+      {% else %}
+        <h1 class="display-4 fw-normal">Hello Guest User</h1>
+      {% endif %}
+    </div> 
+    
+    <div class="container">
+      <div class="row">
+    
+        <!-- blog feed -->
+        <div class="left-column col-lg-7 offset-lg-1">
+    
+          <!-- Top 'create post' bar -->
+          <div class="d-lg-none mb-3">
+            <div class="card m-auto d-flex flex-column p-3">
+              <img class="img-fluid d-block m-auto pb-2" src="{% static 'AMA LOGO.jpg' %}" width="72" height="72">
+              <p class="lead">This web app aims to help college students for their studies as well as recommending them the topics 
+                that they will need.</p>
+              <p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+            </div>
+          </div>
+          <!-- end Top 'create post' bar -->
+    
+          <!-- Blog posts-->
+          {% for post in blog_posts %}
+            <div class="blog-post-container">
+              {% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+            </div>
+          {% endfor %}
+          <!-- End Blog posts-->
+        </div>
+        <!-- end blog feed -->
+    
+    
+        <!-- Right 'create post' column  -->
+        <div class="right-column col-lg-3 d-lg-flex d-none flex-column">
+    
+          <div class="card create-post-bar d-flex flex-column p-3">
+            <img class="img-fluid d-block m-auto pb-2" src="{% static 'AMA LOGO.jpg' %}" width="72" height="72">
+            <p class="lead">This web app aims to help college students for their studies as well as recommending them the topics 
+              that they will need.</p>
+            <p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+          </div>
+        
+        </div>
+        <!-- end Right 'create post' column  -->
+    
+      </div>
+    </div>
+    
+
+
+{% endblock content %}
+
+
